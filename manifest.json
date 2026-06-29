@@ -1,0 +1,18 @@
+{
+  "name": "Kinship Family Hub",
+  "short_name": "Kinship",
+  "description": "Premium Digital Refrigerator and communal command center for your home, aligning family calendars, chats, lists, and meals.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8f9fa",
+  "theme_color": "#00629c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/512/home-agreement.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,436 @@
+/* Kinship Family Hub Style System */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-family: 'Plus Jakarta Sans', sans-serif;
+  --bg-color: #f8f9fa;
+  --color-primary: #00629c;
+  --color-secondary: #674bb5;
+  --color-tertiary: #904800;
+  --color-error: #ba1a1a;
+  
+  /* Member Colors */
+  --color-mom: #00629c;
+  --color-dad: #674bb5;
+  --color-alex: #904800;
+  --color-maya: #006a60;
+  --color-leo: #ba1a1a;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #191c1d;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d9dadb;
+  border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #c0c7d2;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Premium Shadows & Containers */
+.chalkboard-tile {
+  background-color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  border-radius: 16px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.chalkboard-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+.chalkboard-tile:active {
+  transform: scale(0.985);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Sticky Note Effect */
+.sticky-note {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+.sticky-note:hover {
+  transform: translateY(-3px) rotate(0.5deg);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Member Border Color Indicators */
+.member-border-mom { border-left: 6px solid var(--color-mom) !important; }
+.member-border-dad { border-left: 6px solid var(--color-dad) !important; }
+.member-border-alex { border-left: 6px solid var(--color-alex) !important; }
+.member-border-maya { border-left: 6px solid var(--color-maya) !important; }
+.member-border-leo { border-left: 6px solid var(--color-leo) !important; }
+
+.member-text-mom { color: var(--color-mom) !important; }
+.member-text-dad { color: var(--color-dad) !important; }
+.member-text-alex { color: var(--color-alex) !important; }
+.member-text-maya { color: var(--color-maya) !important; }
+.member-text-leo { color: var(--color-leo) !important; }
+
+.member-bg-mom { background-color: var(--color-mom) !important; }
+.member-bg-dad { background-color: var(--color-dad) !important; }
+.member-bg-alex { background-color: var(--color-alex) !important; }
+.member-bg-maya { background-color: var(--color-maya) !important; }
+.member-bg-leo { background-color: var(--color-leo) !important; }
+
+/* Preview Controller Style (Matches SoccerCoach layout controller) */
+.mode-selector {
+  background-color: #1e293b;
+  color: #f8fafc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  font-size: 13px;
+  z-index: 100;
+  position: relative;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.selector-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+}
+.selector-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.btn-mode {
+  background: #334155;
+  border: none;
+  color: #cbd5e1;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-mode.active, .btn-mode:hover {
+  background: #00629c;
+  color: white;
+}
+.btn-theme-toggle {
+  background: transparent;
+  border: none;
+  color: #f1f5f9;
+  font-size: 16px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.btn-theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Device Preview Wrappers */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 44px);
+  overflow: hidden;
+}
+
+/* Desktop layout container (default) */
+.desktop-portal-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#desktop-view-content-target {
+  height: 100% !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Mobile Frame simulation */
+.device-frame-wrapper {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: #0f172a;
+  height: 100%;
+  overflow: hidden;
+}
+
+.iphone-frame {
+  width: 412px;
+  height: 892px;
+  background: #000000;
+  border-radius: 50px;
+  padding: 12px;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), inset 0 0 3px 2px rgba(255,255,255,0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dynamic-island {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 30px;
+  background: #000000;
+  border-radius: 20px;
+  z-index: 60;
+}
+
+.iphone-status-bar {
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  color: #191c1d;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 55;
+}
+
+.iphone-screen {
+  flex-grow: 1;
+  background: var(--bg-color);
+  border-radius: 40px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #1e293b;
+}
+
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 5px;
+  background: #191c1d;
+  border-radius: 10px;
+  z-index: 60;
+}
+
+/* Responsive View Switcher */
+body.mobile-mode .desktop-portal-wrapper {
+  display: none !important;
+}
+body.mobile-mode .device-frame-wrapper {
+  display: flex !important;
+}
+
+/* Material Outlined Icon configuration */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 24px;
+  display: inline-block;
+  user-select: none;
+}
+
+.material-symbols-outlined.filled {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Calendar Grid Custom styling */
+.calendar-grid {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+  gap: 4px;
+}
+.calendar-day-cell {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.calendar-day-cell:hover {
+  background-color: #edeeef;
+}
+.calendar-day-cell.active-day {
+  background-color: #00629c !important;
+  color: white !important;
+  font-weight: 700;
+}
+.calendar-day-cell.today {
+  border: 2px solid #00629c;
+}
+.calendar-day-cell.other-month {
+  opacity: 0.35;
+}
+
+/* Checkbox animations */
+.checkbox-bounce {
+  border-radius: 6px;
+  width: 22px;
+  height: 22px;
+  transition: transform 0.15s ease-out;
+}
+.checkbox-bounce:checked {
+  animation: check-bounce 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes check-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* Pulse Timer animate */
+@keyframes pulse-timer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.pulse-timer {
+  animation: pulse-timer 2.5s infinite;
+}
+
+/* Star ratings for Meal Planner */
+.star-rating span {
+  transition: color 0.15s ease;
+}
+.star-rating span:hover {
+  transform: scale(1.15);
+}
+
+/* Safe Area helper */
+.pb-safe {
+  padding-bottom: calc(0px + env(safe-area-inset-bottom));
+}
+
+/* Google Calendar / Stitch Schedule Timeline */
+.timeline-scroll-container {
+  max-height: 480px;
+  overflow-y: auto;
+  border: 1px solid #edeeef;
+  border-radius: 12px;
+  background-color: #ffffff;
+  position: relative;
+}
+
+.timeline-wrapper {
+  position: relative;
+  width: 100%;
+  /* 16 hours (7 AM to 10 PM) * 60px height = 960px */
+  height: 960px; 
+}
+
+.timeline-hour-row {
+  height: 60px;
+  border-bottom: 1px solid #f3f4f5;
+  display: flex;
+  position: relative;
+}
+
+.timeline-hour-label {
+  width: 70px;
+  padding-right: 12px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  color: #707882;
+  font-family: var(--font-family);
+  margin-top: -6px; /* offset label to align with row top line */
+  user-select: none;
+}
+
+.timeline-hour-grid-line {
+  flex-grow: 1;
+  border-left: 1px solid #edeeef;
+}
+
+.timeline-events-overlay {
+  position: absolute;
+  top: 0;
+  left: 70px;
+  right: 0;
+  height: 100%;
+  pointer-events: none;
+}
+
+.timeline-event-card {
+  position: absolute;
+  left: 8px;
+  right: 16px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-family);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  overflow: hidden;
+}
+
+.timeline-event-card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+/* Red indicator line on calendar day */
+.cal-badge-red {
+  background-color: #ba1a1a !important;
+  color: white !important;
+  border-radius: 6px;
+}
+
+.cal-badge-gray {
+  background-color: #e1e3e4 !important;
+  color: #191c1d !important;
+  border-radius: 6px;
+}
+

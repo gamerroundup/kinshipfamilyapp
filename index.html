@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kinship Family Hub</title>
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="app.css">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#00629c">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary": "#ffffff",
+            "surface-container-high": "#e7e8e9",
+            "surface-variant": "#e1e3e4",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#fffbff",
+            "surface-container-low": "#f3f4f5",
+            "on-secondary-container": "#3f1e8c",
+            "on-secondary-fixed-variant": "#4f319c",
+            "primary": "#00629c",
+            "surface-dim": "#d9dadb",
+            "inverse-primary": "#98cbff",
+            "on-secondary-fixed": "#21005e",
+            "primary-fixed": "#cfe5ff",
+            "on-background": "#191c1d",
+            "error-container": "#ffdad6",
+            "secondary": "#674bb5",
+            "surface-bright": "#f8f9fa",
+            "surface-container": "#edeeef",
+            "on-primary-fixed": "#001d33",
+            "tertiary-fixed-dim": "#ffb783",
+            "tertiary-fixed": "#ffdcc5",
+            "on-tertiary-fixed-variant": "#713700",
+            "inverse-on-surface": "#f0f1f2",
+            "on-primary": "#ffffff",
+            "primary-fixed-dim": "#98cbff",
+            "on-primary-fixed-variant": "#004a77",
+            "inverse-surface": "#2e3132",
+            "secondary-fixed": "#e8ddff",
+            "error": "#ba1a1a",
+            "secondary-container": "#ab8ffe",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#301400",
+            "background": "#f8f9fa",
+            "tertiary-container": "#b55d00",
+            "surface": "#f8f9fa",
+            "on-primary-container": "#00050e",
+            "outline-variant": "#c0c7d2",
+            "secondary-fixed-dim": "#cebdff",
+            "primary-container": "#0e7cc1",
+            "on-surface-variant": "#404750",
+            "on-tertiary": "#ffffff",
+            "surface-container-highest": "#e1e3e4",
+            "on-error-container": "#93000a",
+            "tertiary": "#904800",
+            "outline": "#707882",
+            "on-surface": "#191c1d",
+            "surface-tint": "#00639c"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "xs": "4px",
+            "base": "8px",
+            "gutter": "16px",
+            "xl": "48px",
+            "md": "20px",
+            "container-margin": "24px",
+            "sm": "12px",
+            "lg": "32px"
+          },
+          fontFamily: {
+            "display-lg-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-caps": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"]
+          },
+          fontSize: {
+            "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body>
+
+  <!-- Top Display Layout Selector (For Preview Controller) -->
+  <header class="mode-selector">
+    <div class="selector-title">
+      <span class="material-symbols-outlined mr-2">tune</span> PREVIEW CONTROLLER
+    </div>
+    <div class="selector-buttons">
+      <button id="layout-desktop" class="btn-mode active">
+        <span class="material-symbols-outlined">desktop_windows</span> Desktop View
+      </button>
+      <button id="layout-mobile" class="btn-mode">
+        <span class="material-symbols-outlined">phone_iphone</span> Mobile App View
+      </button>
+    </div>
+  </header>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- 1. MOBILE DEVICE FRAME PREVIEW -->
+    <div id="mobile-view-wrapper" class="device-frame-wrapper">
+      <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="iphone-status-bar">
+          <span id="mobile-time">10:15</span>
+          <div class="flex gap-1.5 items-center">
+            <span class="material-symbols-outlined text-[14px]">signal_cellular_alt</span>
+            <span class="material-symbols-outlined text-[14px]">wifi</span>
+            <span class="material-symbols-outlined text-[14px]">battery_full</span>
+          </div>
+        </div>
+        
+        <!-- Mobile Main App Viewport -->
+        <div class="iphone-screen">
+          <div id="mobile-view-content-target" class="flex-grow flex flex-col overflow-hidden">
+            <!-- App views dynamically move in here -->
+          </div>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. DESKTOP VIEWPORT -->
+    <div id="desktop-view-wrapper" class="desktop-portal-wrapper flex-grow flex flex-col">
+      <div id="desktop-view-content-target" class="flex-grow flex flex-col">
+        <!-- App views dynamically move in here -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- REPOSITORIED APP VIEWS (SHARED CONTAINER)  -->
+  <!-- ========================================== -->
+  <div id="app-views-container" class="hidden">
+    <div id="app-views" class="flex-grow flex flex-col overflow-hidden h-full">
+
+      <!-- Global Header (Sticky Top Bar) -->
+      <header class="w-full flex-shrink-0 bg-background flex justify-between items-center px-container-margin py-base h-[64px] border-b border-surface-container">
+        <div class="flex items-center gap-sm cursor-pointer" onclick="switchTab('whiteboard')">
+          <span class="material-symbols-outlined text-primary text-3xl">family_history</span>
+          <h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">Kinship</h1>
+        </div>
+        <div class="flex items-center gap-sm">
+          <span id="sync-badge" class="bg-surface-container text-on-surface-variant font-label-caps text-[10px] px-sm py-[2px] rounded-full border border-outline-variant select-none">
+            LocalStorage Mode
+          </span>
+          <div id="current-member-avatar-btn" class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary cursor-pointer active:scale-95 transition-transform" onclick="switchTab('settings')">
+            <img id="current-member-avatar" class="w-full h-full object-cover" src="" alt="Active Profile">
+          </div>
+        </div>
+      </header>
+
+      <!-- Views Scroll Container -->
+      <div class="flex-grow overflow-y-auto custom-scrollbar p-container-margin pb-32">
+
+        <!-- ========================================== -->
+        <!-- VIEW: WHITEBOARD (DASHBOARD)               -->
+        <!-- ========================================== -->
+        <section id="view-whiteboard" class="view-section hidden flex flex-col gap-lg">
+          <div class="mb-sm">
+            <h2 class="font-headline-md text-headline-md text-on-surface">Family Whiteboard</h2>
+            <p class="text-on-surface-variant font-body-sm text-body-sm">The communal pulse of our home.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+            
+            <!-- Category: Goals -->
+            <div class="flex flex-col gap-sm">
+              <div class="flex items-center justify-between mb-xs">
+                <h3 class="font-title-sm text-on-surface flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span> Goals
+                </h3>
+                <button onclick="openAddGoalModal()" class="text-primary font-label-caps text-label-caps flex items-center hover:underline">
+                  <span class="material-symbols-outlined text-sm">add</span> ADD
+                </button>
+              </div>
+              <div id="whiteboard-goals-list" class="flex flex-col gap-sm">
+                <!-- Dynamically Rendered -->
+              </div>
+            </div>
+
+            <!-- Category: On Deck -->
+            <div class="flex flex-col gap-sm">
+              <div class="flex items-center justify-between mb-xs">
+                <h3 class="font-title-sm text-on-surface flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span> On Deck
+                </h3>
+                <button onclick="openAddTaskModal('on-deck')" class="text-primary font-label-caps text-label-caps flex items-center hover:underline">
+                  <span class="material-symbols-outlined text-sm">add</span> ADD
+                </button>
+              </div>
+              <div id="whiteboard-ondeck-list" class="flex flex-col gap-sm">
+                <!-- Dynamically Rendered -->
+              </div>
+            </div>
+
+            <!-- Category: Active -->
+            <div class="flex flex-col gap-sm">
+              <div class="flex items-center justify-between mb-xs">
+                <h3 class="font-title-sm text-on-surface flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span> Active
+                </h3>
+                <button onclick="openAddTaskModal('active')" class="text-primary font-label-caps text-label-caps flex items-center hover:underline">
+                  <span class="material-symbols-outlined text-sm">add</span> ADD
+                </button>
+              </div>
+              <div id="whiteboard-active-list" class="flex flex-col gap-sm">
+                <!-- Dynamically Rendered -->
+              </div>
+            </div>
+
+            <!-- Category: Complete -->
+            <div class="flex flex-col gap-sm">
+              <div class="flex items-center justify-between mb-xs">
+                <h3 class="font-title-sm text-on-surface flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-outline-variant"></span> Complete
+                </h3>
+                <button id="clear-completed-whiteboard" class="text-on-surface-variant font-label-caps text-[10px] hover:underline">CLEAR</button>
+              </div>
+              <div id="whiteboard-complete-list" class="flex flex-col gap-sm opacity-75">
+                <!-- Dynamically Rendered -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW: CALENDAR                             -->
+        <!-- ========================================== -->
+        <section id="view-calendar" class="view-section hidden flex flex-col gap-sm">
+          
+          <!-- Sticky Header and Grid Wrapper -->
+          <div class="sticky top-0 bg-background z-20 pb-xs flex flex-col gap-xs select-none">
+            <!-- Google Stitch Style Calendar Header -->
+            <div class="flex items-center justify-between px-xs py-1 border-b border-surface-container">
+              <div class="flex items-center gap-md">
+                <button class="p-1 text-on-surface-variant hover:text-on-surface">
+                  <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="relative inline-block text-left">
+                  <button class="flex items-center gap-xs font-headline-md text-headline-md text-on-surface px-sm py-1 rounded-xl">
+                    <span id="calendar-header-month-name">October</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="flex items-center gap-sm">
+                <button class="p-1 text-on-surface-variant hover:text-on-surface">
+                  <span class="material-symbols-outlined">search</span>
+                </button>
+                <!-- Today Date Badge in Red -->
+                <div id="calendar-today-badge" class="w-8 h-8 rounded-lg bg-error text-white font-bold flex items-center justify-center text-sm shadow-sm">
+                  28
+                </div>
+              </div>
+            </div>
+
+            <!-- View Mode Toggles underneath header -->
+            <div class="flex justify-between items-center px-xs py-xs">
+              <div class="flex gap-xs">
+                <button onclick="prevMonth()" class="p-base rounded-full hover:bg-surface-container-low transition-colors">
+                  <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <button onclick="nextMonth()" class="p-base rounded-full hover:bg-surface-container-low transition-colors">
+                  <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+              </div>
+              <div class="flex bg-surface-container p-[3px] rounded-xl">
+                <button onclick="toggleCalendarView('month')" id="btn-cal-month" class="px-sm py-1 rounded-lg font-label-caps text-label-caps font-bold transition-all text-primary bg-white shadow-sm">30-Day</button>
+                <button onclick="toggleCalendarView('week')" id="btn-cal-week" class="px-sm py-1 rounded-lg font-label-caps text-label-caps font-bold transition-all text-on-surface-variant hover:text-on-surface">7-Day</button>
+              </div>
+            </div>
+
+            <!-- Calendar Grid Section -->
+            <div class="bg-white rounded-xl p-sm chalkboard-tile border border-outline-variant/20">
+              <!-- Weekday Row Su Mo Tu We Th Fr Sa -->
+              <div class="text-center font-label-caps text-[11px] text-on-surface-variant mb-xs" style="display: grid !important; grid-template-columns: repeat(7, 1fr) !important; gap: 4px;">
+                <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+              </div>
+              <!-- Days Grid -->
+              <div id="calendar-days-container" class="gap-y-1" style="display: grid !important; grid-template-columns: repeat(7, 1fr) !important; gap: 4px;">
+                <!-- Rendered via JS -->
+              </div>
+            </div>
+
+            <!-- Selected Day Label Bar (EST  Fri 22) -->
+            <div class="flex justify-between items-center px-sm py-1.5 bg-surface-container-low rounded-lg text-body-sm font-semibold border-y border-outline-variant/10 text-on-surface-variant">
+              <span>EST</span>
+              <span id="selected-day-label">Fri 22</span>
+            </div>
+          </div>
+
+          <!-- 3. Scrollable Event Timeline View -->
+          <div class="timeline-scroll-container custom-scrollbar">
+            <div class="timeline-wrapper">
+              <!-- Grid lines representing hours (7 AM to 10 PM) -->
+              <div id="timeline-hours-grid">
+                <!-- JS Rendered -->
+              </div>
+              
+              <!-- Events overlay containing absolutely positioned blocks -->
+              <div id="timeline-events-overlay" class="timeline-events-overlay">
+                <!-- JS Rendered -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Conflict Alert Banner -->
+          <div id="calendar-conflict-alert" class="hidden bg-error-container text-on-error-container p-md rounded-xl flex items-start gap-sm chalkboard-tile">
+            <span class="material-symbols-outlined text-error">notifications_active</span>
+            <div>
+              <p class="font-title-sm text-body-sm font-semibold">Schedule Overlap Alert</p>
+              <p id="calendar-conflict-text" class="font-body-sm text-sm">Multiple events scheduled at the same time.</p>
+            </div>
+          </div>
+
+          <!-- Footer/Status Info -->
+          <div class="flex justify-between items-center px-sm pt-xs pb-sm text-body-sm text-outline select-none">
+            <span id="timeline-upcoming-status">Upcoming in 3h 6min</span>
+            <div class="flex gap-sm">
+              <button onclick="showAllEvents()" class="font-label-caps text-[11px] text-primary hover:underline font-bold">Show All List</button>
+              <span class="material-symbols-outlined cursor-pointer hover:text-on-surface">more_horiz</span>
+            </div>
+          </div>
+
+          <!-- Calendar Add Event Floating Button -->
+          <button onclick="openAddEventModal()" class="fixed bottom-24 right-container-margin w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center active:scale-95 transition-all z-40">
+            <span class="material-symbols-outlined text-3xl">add</span>
+          </button>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW: CHAT                                 -->
+        <!-- ========================================== -->
+        <section id="view-chat" class="view-section hidden flex flex-col h-[calc(100vh-210px)] max-w-4xl mx-auto overflow-hidden">
+          <div class="flex-shrink-0 flex justify-between items-center mb-sm">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">Family Chat</h2>
+              <p class="text-on-surface-variant font-body-sm text-body-sm">Stay connected and coordinate decisions.</p>
+            </div>
+            <button onclick="openCreatePollModal()" class="flex items-center gap-1 bg-surface-container hover:bg-surface-container-high px-sm py-1.5 rounded-full font-label-caps text-label-caps text-primary border border-outline-variant">
+              <span class="material-symbols-outlined text-sm">ballot</span> NEW POLL
+            </button>
+          </div>
+
+          <!-- Chat messages area -->
+          <div id="chat-messages-container" class="flex-grow overflow-y-auto custom-scrollbar flex flex-col gap-gutter pr-xs mb-sm">
+            <!-- Dynamically Rendered -->
+          </div>
+
+          <!-- Typing Indicator -->
+          <div id="chat-typing-indicator" class="flex items-center gap-xs ml-[40px] opacity-0 transition-opacity duration-300 h-6">
+            <div class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce"></div>
+            <div class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div class="w-1.5 h-1.5 bg-outline rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <span id="chat-typing-text" class="font-label-caps text-[10px] text-outline ml-xs">Dad is typing...</span>
+          </div>
+
+          <!-- Message Input Bar -->
+          <div class="flex items-center gap-sm bg-surface-container-low p-xs rounded-full border border-outline-variant focus-within:border-primary transition-colors flex-shrink-0 mt-xs">
+            <button onclick="triggerSimulatedChatReply()" title="Simulate Reply" class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+              <span class="material-symbols-outlined">add_circle</span>
+            </button>
+            <input id="chat-input" class="flex-grow bg-transparent border-none focus:ring-0 text-body-lg placeholder:text-outline h-10" placeholder="Type a message..." type="text" onkeydown="if(event.key === 'Enter') sendChatMessage()"/>
+            <button onclick="sendChatMessage()" class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary hover:opacity-90 active:scale-95 transition-all">
+              <span class="material-symbols-outlined filled">send</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW: LISTS (GROCERIES, CHORES, REWARDS)   -->
+        <!-- ========================================== -->
+        <section id="view-lists" class="view-section hidden flex flex-col gap-lg">
+          <div class="flex flex-col md:flex-row md:justify-between md:items-end gap-sm">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-background">Lists & Chores</h2>
+              <p class="font-body-sm text-on-surface-variant">Groceries, chores checklists, and rewards.</p>
+            </div>
+            <!-- Sub tabs selectors -->
+            <div class="flex bg-surface-container p-[3px] rounded-xl self-start">
+              <button onclick="switchListsSubTab('groceries')" id="btn-sub-groceries" class="px-sm py-1.5 rounded-lg font-label-caps text-label-caps font-bold transition-all text-primary bg-white shadow-sm">GROCERIES</button>
+              <button onclick="switchListsSubTab('chores')" id="btn-sub-chores" class="px-sm py-1.5 rounded-lg font-label-caps text-label-caps font-bold transition-all text-on-surface-variant hover:text-on-surface">CHORES</button>
+              <button onclick="switchListsSubTab('rewards')" id="btn-sub-rewards" class="px-sm py-1.5 rounded-lg font-label-caps text-label-caps font-bold transition-all text-on-surface-variant hover:text-on-surface">REWARDS</button>
+            </div>
+          </div>
+
+          <!-- LIST SUB-PANES -->
+          <div id="lists-panes-container">
+            
+            <!-- Sub-tab 1: Groceries -->
+            <div id="pane-groceries" class="space-y-md">
+              <div class="bg-surface-container-lowest rounded-xl p-md chalkboard-tile flex flex-col gap-sm border border-outline-variant/30">
+                <div class="flex items-center justify-between mb-xs">
+                  <div class="flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-primary">shopping_basket</span>
+                    <h3 class="font-title-sm text-on-surface">Shared Grocery List</h3>
+                  </div>
+                  <span id="grocery-count-badge" class="bg-primary-fixed text-on-primary-fixed font-label-caps text-label-caps px-sm py-1 rounded-full">0 ITEMS</span>
+                </div>
+                <!-- Quick Add Input -->
+                <div class="relative group">
+                  <input id="grocery-input" class="w-full h-12 pl-12 pr-16 bg-surface-container-low rounded-xl border-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all font-body-lg text-on-surface" placeholder="Add an item (press Enter)..." type="text" onkeydown="if(event.key === 'Enter') addGroceryItem()"/>
+                  <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">add_circle</span>
+                  <button onclick="addGroceryItem()" class="absolute right-3 top-1/2 -translate-y-1/2 bg-primary text-white text-[11px] px-sm py-1 rounded-lg hover:opacity-90">ADD</button>
+                </div>
+                <!-- List Container -->
+                <div id="grocery-list-items" class="flex flex-col gap-base mt-sm">
+                  <!-- JS Rendered -->
+                </div>
+              </div>
+              <div class="bg-tertiary-container/10 p-md rounded-xl border border-tertiary-container/20">
+                <p class="font-body-sm text-tertiary">Pro tip: Items checked will automatically move to completed. You can restore them anytime.</p>
+              </div>
+            </div>
+
+            <!-- Sub-tab 2: Chores -->
+            <div id="pane-chores" class="space-y-md">
+              <div class="bg-surface-container-lowest rounded-xl p-md chalkboard-tile flex flex-col gap-sm border border-outline-variant/30">
+                <div class="flex items-center justify-between mb-xs">
+                  <div class="flex items-center gap-xs">
+                    <span class="material-symbols-outlined text-secondary">checklist_rtl</span>
+                    <h3 class="font-title-sm text-on-surface">Chore Checklist</h3>
+                  </div>
+                  <button onclick="openAddChoreModal()" class="bg-secondary text-white font-label-caps text-[11px] px-sm py-1.5 rounded-lg flex items-center gap-1 active:scale-95 transition-transform">
+                    <span class="material-symbols-outlined text-sm">add_task</span> ASSIGN CHORE
+                  </button>
+                </div>
+                
+                <!-- Filter Chips -->
+                <div class="flex gap-xs overflow-x-auto pb-xs no-scrollbar">
+                  <button onclick="filterChores('all')" id="chore-filter-all" class="bg-secondary-container text-on-secondary-container px-sm py-1 rounded-full font-label-caps text-label-caps shrink-0">ALL</button>
+                  <button onclick="filterChores('kids')" id="chore-filter-kids" class="bg-surface-container text-on-surface-variant px-sm py-1 rounded-full font-label-caps text-label-caps shrink-0">KIDS</button>
+                  <button onclick="filterChores('parents')" id="chore-filter-parents" class="bg-surface-container text-on-surface-variant px-sm py-1 rounded-full font-label-caps text-label-caps shrink-0">PARENTS</button>
+                </div>
+
+                <!-- Chores Stack -->
+                <div id="chores-list-items" class="flex flex-col gap-sm">
+                  <!-- JS Rendered -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Sub-tab 3: Rewards -->
+            <div id="pane-rewards" class="space-y-md">
+              <!-- Points Progress Summary -->
+              <div class="bg-surface-container-lowest rounded-xl p-md border border-outline-variant/30 chalkboard-tile">
+                <h3 class="font-title-sm text-on-surface mb-md">Family Points Progress</h3>
+                <div id="kids-points-container" class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+                  <!-- Dynamically rendered progress bars for Leo and Maya -->
+                </div>
+              </div>
+
+              <!-- Rewards Store Grid -->
+              <div class="space-y-sm">
+                <h3 class="font-title-sm text-on-surface flex items-center gap-1">
+                  <span class="material-symbols-outlined text-primary">storefront</span> Rewards Store
+                </h3>
+                <div id="rewards-store-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-gutter">
+                  <!-- Rendered via JS -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW: MEAL PLANNER                         -->
+        <!-- ========================================== -->
+        <section id="view-meals" class="view-section hidden flex flex-col gap-lg">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-background">Family Meals</h2>
+              <p class="font-body-sm text-on-surface-variant">Planning for this week</p>
+            </div>
+            <button onclick="generateAIMealSuggestions()" class="bg-primary text-on-primary flex items-center gap-xs px-md py-2 rounded-xl font-label-caps text-label-caps hover:opacity-90 active:scale-95 transition-all">
+              <span class="material-symbols-outlined text-sm">auto_awesome</span> AI SUGGESTIONS
+            </button>
+          </div>
+
+          <!-- This Week's Chefs -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+            <div class="chalkboard-tile border-l-[6px] border-primary p-md flex items-center justify-between">
+              <div>
+                <span class="bg-primary-fixed text-on-primary-fixed text-[10px] px-sm py-0.5 rounded-full font-bold">CHEF</span>
+                <h3 class="font-title-sm mt-1">Dad</h3>
+                <p class="text-[11px] text-on-surface-variant">Mon, Wed, Fri</p>
+              </div>
+              <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaKYh2YRjRnNsWLQTFHUXQAPZaD0NMdn4K0hYTXVGC2vUtRzwNmaebWub6jbCq-qDjmJoAYP2reGoR-P8PZBa1K3cjsv5nSVbwDT_y6nV2JL5shAS5EXL2ybrTkJmy2aQIP0EDqsx65Kp-47O3z7bEkuRyXJJiSQKkIWAD-6jDxSo3NIHzRkO-iPM-3vYlLlD9UoJAEMC2LCn-2lJIGNflxTr4iLH1MElRlMMXphOYyXMWCCpMnlWQEoPKBn1DTESVeTUexIItg4U" alt="Dad">
+              </div>
+            </div>
+            <div class="chalkboard-tile border-l-[6px] border-secondary p-md flex items-center justify-between">
+              <div>
+                <span class="bg-secondary-fixed text-on-secondary-fixed text-[10px] px-sm py-0.5 rounded-full font-bold">SOUS CHEF</span>
+                <h3 class="font-title-sm mt-1">Maya</h3>
+                <p class="text-[11px] text-on-surface-variant">Tue, Thu, Sun</p>
+              </div>
+              <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB6KfDxRRG5lMSL9MjZ-uwy-y6BGAce-EB-TLej-G9VNYQHnsrsKx1Tr983MGlJRt9LLKdUFYXOq4pOqdu_6Aq08B5izfz_RXoSDXayAl7gCSje9UajlVJweCm8790LuLwCzt0ARxt8Ha14WwBafypJEIQcZLAY0fqp_N4D8BfyQRV4i0urZ1p9XrcyH5Z1URysbdss1Eoci2QRuMzaw4Bjb4lWLBEAtuMBp35YX1BjoMbpvtCmjJAX32Xe_dvxql-HBPHRle9Qwo" alt="Maya">
+              </div>
+            </div>
+            <div class="chalkboard-tile border-l-[6px] border-tertiary p-md flex items-center justify-between">
+              <div>
+                <span class="bg-tertiary-fixed text-on-tertiary-fixed text-[10px] px-sm py-0.5 rounded-full font-bold">CLEANUP</span>
+                <h3 class="font-title-sm mt-1">Leo</h3>
+                <p class="text-[11px] text-on-surface-variant">All Week</p>
+              </div>
+              <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+                <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIzUSs_c6LG57TC0oETWMyZINCnoMeRhXOWomffpifLJ0kagZbnvqv6tneKWm6tbBzvcSrp4s1GsSP25LJzwCrZmIs4TSe_4f-2HyOPhyCMTchrc78gzRmCKDue0PA_awZo30Z6KVPk0oniOifdMZn5-SgSa_K4w_Z7uLVSAe2L-CuSzY3m2LiBVi9NmnY_cyXVJ1WiSS-TiqcVoI-lS-GvzmJUhJYkjpl6lO7wXJbpFmJzd1-N4s-jH12NnFv3UTr9jmNf8wjCts" alt="Leo">
+              </div>
+            </div>
+          </div>
+
+          <!-- Weekly Meal Grid -->
+          <div id="meal-days-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+            <!-- Rendered via JS -->
+          </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- VIEW: SETTINGS & SYNC                      -->
+        <!-- ========================================== -->
+        <section id="view-settings" class="view-section hidden flex flex-col gap-lg max-w-2xl mx-auto">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Settings & Profiles</h2>
+            <p class="text-on-surface-variant font-body-sm text-body-sm">Manage family member profiles and synchronization options.</p>
+          </div>
+
+          <!-- Profiles Panel -->
+          <div class="bg-surface-container-lowest p-md rounded-xl chalkboard-tile border border-outline-variant/30">
+            <h3 class="font-title-sm text-on-surface mb-md">Select Active Profile</h3>
+            <div id="settings-profile-list" class="grid grid-cols-5 gap-sm text-center">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Edit Profile Avatars Form -->
+          <div class="bg-surface-container-lowest p-md rounded-xl chalkboard-tile border border-outline-variant/30 flex flex-col gap-sm">
+            <h3 class="font-title-sm text-on-surface flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary">face</span> Custom Profile Photos
+            </h3>
+            <p class="text-body-sm text-on-surface-variant">Update the avatar image URLs for each family member below to customize profiles instantly.</p>
+            <div id="settings-avatar-edit-list" class="space-y-sm mt-xs">
+              <!-- Rendered dynamically via JS -->
+            </div>
+          </div>
+
+          <!-- GitHub Sync Configuration -->
+          <div class="bg-surface-container-lowest p-md rounded-xl chalkboard-tile border border-outline-variant/30 flex flex-col gap-sm">
+            <h3 class="font-title-sm text-on-surface flex items-center gap-1">
+              <span class="material-symbols-outlined text-primary">cloud_sync</span> GitHub Cloud Storage Sync
+            </h3>
+            <p class="text-body-sm text-on-surface-variant">Store your family hub data on a free GitHub repository. This acts as your secure backend support so your family can access the same data.</p>
+            
+            <div class="space-y-sm mt-xs">
+              <div>
+                <label class="block text-label-caps text-on-surface-variant mb-xs">GitHub Repository Name</label>
+                <input id="github-repo" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-12 px-4" placeholder="username/my-family-hub" />
+              </div>
+              <div>
+                <label class="block text-label-caps text-on-surface-variant mb-xs">Branch Name</label>
+                <input id="github-branch" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-12 px-4" placeholder="main" value="main" />
+              </div>
+              <div>
+                <label class="block text-label-caps text-on-surface-variant mb-xs">File Path in Repository</label>
+                <input id="github-path" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-12 px-4" placeholder="kinship-data.json" value="kinship-data.json" />
+              </div>
+              <div>
+                <label class="block text-label-caps text-on-surface-variant mb-xs">Personal Access Token (PAT) <span class="text-error">*</span></label>
+                <input id="github-token" type="password" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-12 px-4" placeholder="github_pat_..." />
+              </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-sm mt-md">
+              <button onclick="saveGitHubConfig()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90 active:scale-95 transition-all">
+                Save & Connect Repo
+              </button>
+              <button onclick="clearGitHubConfig()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl hover:bg-surface-container-high active:scale-95 transition-all">
+                Disconnect
+              </button>
+            </div>
+            
+            <div id="sync-status-details" class="text-body-sm mt-xs border-t border-surface-variant/30 pt-sm text-on-surface-variant">
+              Status: <span class="font-bold">Not Connected</span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Bottom Pinned Navigation Bar -->
+      <nav id="app-bottom-navbar" class="flex-shrink-0 flex justify-around items-center px-sm pb-safe h-[72px] bg-surface-container-lowest border-t border-surface-container shadow-lg z-30">
+        <button id="nav-btn-whiteboard" onclick="switchTab('whiteboard')" class="flex flex-col items-center justify-center text-primary py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined filled">dashboard_customize</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Whiteboard</span>
+        </button>
+        <button id="nav-btn-calendar" onclick="switchTab('calendar')" class="flex flex-col items-center justify-center text-on-surface-variant py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Calendar</span>
+        </button>
+        <button id="nav-btn-chat" onclick="switchTab('chat')" class="flex flex-col items-center justify-center text-on-surface-variant py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined">chat_bubble</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Chat</span>
+        </button>
+        <button id="nav-btn-lists" onclick="switchTab('lists')" class="flex flex-col items-center justify-center text-on-surface-variant py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined">format_list_bulleted</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Lists</span>
+        </button>
+        <button id="nav-btn-meals" onclick="switchTab('meals')" class="flex flex-col items-center justify-center text-on-surface-variant py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined">restaurant</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Meals</span>
+        </button>
+        <button id="nav-btn-settings" onclick="switchTab('settings')" class="flex flex-col items-center justify-center text-on-surface-variant py-xs hover:opacity-80 transition-opacity px-xs">
+          <span class="material-symbols-outlined">settings</span>
+          <span class="font-label-caps text-label-caps select-none uppercase">Settings</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODALS CONTAINER                           -->
+  <!-- ========================================== -->
+  <div id="modals-container" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-md">
+    
+    <!-- Modal: Add Goal -->
+    <div id="modal-add-goal" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Add Whiteboard Goal</h3>
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Goal Title</label>
+          <input id="input-goal-title" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Backyard Garden">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Subtext Description</label>
+          <input id="input-goal-desc" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Planting tomatoes and herbs">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Status Label</label>
+          <input id="input-goal-status" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. PLANNING PHASE">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Initial Progress %</label>
+          <input id="input-goal-progress" type="number" min="0" max="100" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" value="25">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Visual Theme Color</label>
+          <select id="input-goal-color" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="primary">Teal Blue (Mom)</option>
+            <option value="secondary">Purple (Dad)</option>
+            <option value="tertiary">Amber (Campbell)</option>
+            <option value="maya">Green (Daphne)</option>
+            <option value="leo">Red (Liberty)</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitGoal()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Save Goal</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Modal: Add Whiteboard Task -->
+    <div id="modal-add-wtask" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Add Task to Board</h3>
+      <input type="hidden" id="input-wtask-lane">
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Task Name</label>
+          <input id="input-wtask-title" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Vet Appointment">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Notes / Details</label>
+          <input id="input-wtask-desc" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Bring vaccination documents">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Time Details (Optional)</label>
+          <input id="input-wtask-time" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Thursday, 4 PM">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Assignee</label>
+          <select id="input-wtask-assignee" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="mom">Mom</option>
+            <option value="dad">Dad</option>
+            <option value="campbell">Campbell</option>
+            <option value="daphne">Daphne</option>
+            <option value="liberty">Liberty</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitWhiteboardTask()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Save Task</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Modal: Add Calendar Event -->
+    <div id="modal-add-event" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Add Calendar Event</h3>
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Event Title</label>
+          <input id="input-event-title" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Soccer Practice">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Date</label>
+          <input id="input-event-date" type="date" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+        </div>
+        <div class="grid grid-cols-2 gap-sm">
+          <div>
+            <label class="block text-label-caps text-on-surface-variant mb-xs">Start Time</label>
+            <input id="input-event-start" type="time" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" value="15:30">
+          </div>
+          <div>
+            <label class="block text-label-caps text-on-surface-variant mb-xs">End Time</label>
+            <input id="input-event-end" type="time" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" value="17:00">
+          </div>
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Category / Tag</label>
+          <input id="input-event-tag" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. SCHOOL, WORK, HEALTH">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Attendee Profile</label>
+          <select id="input-event-member" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="mom">Mom</option>
+            <option value="dad">Dad</option>
+            <option value="campbell">Campbell</option>
+            <option value="daphne">Daphne</option>
+            <option value="liberty">Liberty</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitEvent()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Add Event</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Modal: Create Chat Poll -->
+    <div id="modal-create-poll" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Create Family Poll</h3>
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Question</label>
+          <input id="input-poll-question" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. What's for dinner tonight?">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Option 1</label>
+          <input id="input-poll-opt1" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Pizza">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Option 2</label>
+          <input id="input-poll-opt2" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Taco Night">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Option 3 (Optional)</label>
+          <input id="input-poll-opt3" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Salad Bar">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Duration (Hours)</label>
+          <input id="input-poll-duration" type="number" min="1" max="72" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" value="3">
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitPoll()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Post Poll</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Modal: Add Chore -->
+    <div id="modal-add-chore" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Assign Chore</h3>
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Chore Name</label>
+          <input id="input-chore-title" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Walk the Dog">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Due Description</label>
+          <input id="input-chore-due" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Due today, Before 5 PM">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Chore Category Icon Tag</label>
+          <select id="input-chore-icon" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="pets">Pets (Dog, Cat)</option>
+            <option value="restaurant">Kitchen (Dishes, Trash)</option>
+            <option value="delete">Cleaning (Sweep, Recycling)</option>
+            <option value="eco">Yard (Plants, Garden)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Assignee</label>
+          <select id="input-chore-assignee" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="liberty">Liberty (10)</option>
+            <option value="daphne">Daphne (12)</option>
+            <option value="campbell">Campbell (25)</option>
+            <option value="dad">Dad</option>
+            <option value="mom">Mom</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Points Awarded</label>
+          <input id="input-chore-points" type="number" min="0" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" value="50">
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitChore()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Assign</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Modal: Add Meal -->
+    <div id="modal-add-meal" class="hidden bg-white rounded-2xl w-full max-w-md p-md chalkboard-tile">
+      <h3 class="font-headline-md text-title-sm text-on-surface mb-md">Add Weekly Meal</h3>
+      <input type="hidden" id="input-meal-day">
+      <div class="space-y-sm mb-md">
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Meal Time</label>
+          <select id="input-meal-time" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3">
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Meal Name</label>
+          <input id="input-meal-title" type="text" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-11 px-3" placeholder="e.g. Blueberry Overnight Oats">
+        </div>
+        <div>
+          <label class="block text-label-caps text-on-surface-variant mb-xs">Estimated Ingredients (Optional)</label>
+          <textarea id="input-meal-ingredients" class="w-full bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary p-3" rows="3" placeholder="e.g. Oats, milk, blueberries, maple syrup"></textarea>
+        </div>
+      </div>
+      <div class="flex gap-sm">
+        <button onclick="submitMeal()" class="flex-1 bg-primary text-on-primary font-title-sm py-sm rounded-xl hover:opacity-90">Save Meal</button>
+        <button onclick="closeActiveModal()" class="bg-surface-container text-on-surface-variant font-title-sm px-md py-sm rounded-xl">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Application Logic -->
+  <script src="app.js"></script>
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then((reg) => console.log('Service Worker registered successfully with scope:', reg.scope))
+          .catch((err) => console.error('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>
