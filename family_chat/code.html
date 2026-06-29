@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kinship Family Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#ffdcc5",
+            "secondary-fixed-dim": "#cebdff",
+            "primary-container": "#0e7cc1",
+            "error-container": "#ffdad6",
+            "surface": "#f8f9fa",
+            "on-surface-variant": "#404750",
+            "surface-container-highest": "#e1e3e4",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#4f319c",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#cfe5ff",
+            "on-primary-fixed-variant": "#004a77",
+            "inverse-primary": "#98cbff",
+            "on-tertiary": "#ffffff",
+            "tertiary-container": "#b55d00",
+            "tertiary": "#904800",
+            "on-primary-fixed": "#001d33",
+            "outline-variant": "#c0c7d2",
+            "background": "#f8f9fa",
+            "surface-tint": "#00639c",
+            "inverse-surface": "#2e3132",
+            "surface-dim": "#d9dadb",
+            "outline": "#707882",
+            "primary-fixed-dim": "#98cbff",
+            "on-secondary-fixed": "#21005e",
+            "secondary-container": "#ab8ffe",
+            "primary": "#00629c",
+            "on-surface": "#191c1d",
+            "inverse-on-surface": "#f0f1f2",
+            "secondary": "#674bb5",
+            "tertiary-fixed-dim": "#ffb783",
+            "on-error": "#ffffff",
+            "error": "#ba1a1a",
+            "on-secondary-container": "#3f1e8c",
+            "surface-container": "#edeeef",
+            "on-secondary": "#ffffff",
+            "on-primary-container": "#00050e",
+            "on-background": "#191c1d",
+            "surface-container-lowest": "#ffffff",
+            "secondary-fixed": "#e8ddff",
+            "surface-container-low": "#f3f4f5",
+            "surface-bright": "#f8f9fa",
+            "surface-variant": "#e1e3e4",
+            "on-tertiary-fixed-variant": "#713700",
+            "surface-container-high": "#e7e8e9",
+            "on-tertiary-fixed": "#301400",
+            "on-tertiary-container": "#fffbff",
+            // Family Member Specific Colors for Chat
+            "member-mom": "#00629c",
+            "member-dad": "#674bb5",
+            "member-adult": "#904800",
+            "member-child-1": "#006a60",
+            "member-child-2": "#7a5900"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "xs": "4px",
+            "base": "8px",
+            "gutter": "16px",
+            "xl": "48px",
+            "md": "20px",
+            "container-margin": "24px",
+            "sm": "12px",
+            "lg": "32px"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-caps": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "display-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .chat-bubble-shadow {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #e1e3e4;
+      border-radius: 10px;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-lg min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 bg-background dark:bg-background flex justify-between items-center px-container-margin py-base h-[64px]">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">family_history</span>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary dark:text-primary-fixed-dim">Kinship</h1>
+</div>
+<div class="flex items-center gap-gutter">
+<h2 class="hidden md:block font-headline-md text-headline-md-mobile text-on-surface">Family Chat</h2>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A clean, professional close-up portrait of a middle-aged woman with a warm, friendly smile, representing the 'Mom' profile in a family app. The lighting is soft and natural, emphasizing a bright and welcoming light-mode aesthetic with a minimalist neutral background that fits seamlessly into a modern family digital environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYeS81OBtSFpz55M6-XiqiTfLeOLp4gsnC3aTHaGxjSwHzDx-0JLf937uT98hwTVnyj_DbmIFzmtUyQcuqsi9wUWMJD_8_Wr3NbpsqQTQ3R0YVQ0i2_DFm6zJZ0vfuLFIqLViytze8Jz1s7s6y5ldz_PUtK80j5vxSGPZqWctw3KdT4qHS3JAW_hT57EfTgp0zDtsvdDAgOeAmkapw3ucY2NQKwXFE7-9Bt__Ntj4r1Pf5tzun4WvlV1OeRqWJu3IrncyLVq_Sz7Q"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-4xl mx-auto px-container-margin pb-[140px] pt-base flex flex-col gap-lg">
+<!-- Chat Content -->
+<div class="flex flex-col gap-gutter custom-scrollbar overflow-y-auto pr-xs">
+<!-- Date Divider -->
+<div class="flex justify-center my-base">
+<span class="bg-surface-container-low text-on-surface-variant font-label-caps text-label-caps px-sm py-xs rounded-full">TODAY</span>
+</div>
+<!-- Message: Dad -->
+<div class="flex items-end gap-sm group">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A portrait of a cheerful father in his late 40s, looking into the camera with a kind expression. The photo is set in a bright, modern living room with natural light. The aesthetic is clean and high-end, featuring soft-focus backgrounds and a warm, domestic atmosphere that reflects family harmony." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaKYh2YRjRnNsWLQTFHUXQAPZaD0NMdn4K0hYTXVGC2vUtRzwNmaebWub6jbCq-qDjmJoAYP2reGoR-P8PZBa1K3cjsv5nSVbwDT_y6nV2JL5shAS5EXL2ybrTkJmy2aQIP0EDqsx65Kp-47O3z7bEkuRyXJJiSQKkIWAD-6jDxSo3NIHzRkO-iPM-3vYlLlD9UoJAEMC2LCn-2lJIGNflxTr4iLH1MElRlMMXphOYyXMWCCpMnlWQEoPKBn1DTESVeTUexIItg4U"/>
+</div>
+<div class="max-w-[80%] flex flex-col">
+<span class="ml-sm font-label-caps text-label-caps text-on-surface-variant mb-xs">Dad</span>
+<div class="bg-white p-md rounded-2xl rounded-bl-none chat-bubble-shadow border-l-[6px] border-secondary">
+<p class="text-on-surface font-body-lg">Hey everyone! Don't forget we have the soccer match at 5 PM today. Who's bringing the orange slices?</p>
+<span class="block text-right font-label-caps text-[10px] text-outline mt-xs">08:30 AM</span>
+</div>
+</div>
+</div>
+<!-- Message: Mom -->
+<div class="flex items-end gap-sm flex-row-reverse group">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A close-up of a smiling mother with gentle features, captured in a bright, airy kitchen setting. The lighting is soft and flattering, emphasizing a crisp, clean light-mode look. The style is modern and minimalist, perfectly suited for a high-quality domestic lifestyle application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDinbEmxqDa3JXlW1cS8isnvQkrZuKE2AW_rT79hO0hXdw1yn3ZX1SWmUobKm-MNb3zxNQzYZIfk7LYd-dpeZKjcqNLFXFZD2i4NDhMcjaPwfv41uBcCKBDlDajo4bTcTKtwDwChLrEr6OgtSXi7CPRKOqFR2Uyz4CrBAny2YGVS1WCDWs77Cb3UNmVkXznfRT4drd8AE7fkyHVxXScObC_rY3VKgcg8g0a8W6N14Y973OSGFjwMarPdj-ak0H3-oYYdRxF01LqSEE"/>
+</div>
+<div class="max-w-[80%] flex flex-col items-end">
+<span class="mr-sm font-label-caps text-label-caps text-on-surface-variant mb-xs">Mom (You)</span>
+<div class="bg-primary text-on-primary p-md rounded-2xl rounded-br-none chat-bubble-shadow border-l-[6px] border-primary-container">
+<p class="font-body-lg">I've got the oranges! Already sliced and in the fridge. 🍊</p>
+<span class="block text-right font-label-caps text-[10px] opacity-80 mt-xs">08:45 AM</span>
+</div>
+</div>
+</div>
+<!-- Message: 25yr old (Alex) -->
+<div class="flex items-end gap-sm group">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stylish 25-year-old young man with short dark hair, wearing a simple white t-shirt. The background is a minimalist urban apartment with soft morning light. The image captures a serene, modern vibe with professional-grade photography and a clean, high-contrast aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLZc2iqy5C5Xhak5i_ikY8IcW8llcs7eXTauy85ucii4qdXyqRkXLAjITR339aITCGr76drqktz78uSW3mGdDyNNQiAv3-CdmvX4pVKdZJrxhYS4kD0QCg3iu8RLYY0sm4IGCWjQj1RqCtYAeJnEBNMISFmx_jnCD3HkYEEjnZtLiKfRUP-jvhaeJtFrJ2agAc9T9vS0GaOHLaaQO9kZVqqC7stG22P0VkiLvGwdDQkDg51BwcmGpCDrM8M76kVvMLl1uplqIawmE"/>
+</div>
+<div class="max-w-[80%] flex flex-col">
+<span class="ml-sm font-label-caps text-label-caps text-on-surface-variant mb-xs">Alex</span>
+<div class="bg-white p-md rounded-2xl rounded-bl-none chat-bubble-shadow border-l-[6px] border-tertiary">
+<p class="text-on-surface font-body-lg">I'll be there a bit late, finishing up a client call. Save me a seat!</p>
+<span class="block text-right font-label-caps text-[10px] text-outline mt-xs">09:12 AM</span>
+</div>
+</div>
+</div>
+<!-- Message: 12yr old (Maya) -->
+<div class="flex items-end gap-sm group">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A bright-eyed 12-year-old girl with a playful smile and braided hair. The setting is a colorful, organized study area with soft lighting. The image is vibrant yet clean, reflecting a youthful energy within a structured, modern family environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB6KfDxRRG5lMSL9MjZ-uwy-y6BGAce-EB-TLej-G9VNYQHnsrsKx1Tr983MGlJRt9LLKdUFYXOq4pOqdu_6Aq08B5izfz_RXoSDXayAl7gCSje9UajlVJweCm8790LuLwCzt0ARxt8Ha14WwBafypJEIQcZLAY0fqp_N4D8BfyQRV4i0urZ1p9XrcyH5Z1URysbdss1Eoci2QRuMzaw4Bjb4lWLBEAtuMBp35YX1BjoMbpvtCmjJAX32Xe_dvxql-HBPHRle9Qwo"/>
+</div>
+<div class="max-w-[80%] flex flex-col">
+<span class="ml-sm font-label-caps text-label-caps text-on-surface-variant mb-xs">Maya</span>
+<div class="bg-white p-md rounded-2xl rounded-bl-none chat-bubble-shadow border-l-[6px] border-[#006a60]">
+<p class="text-on-surface font-body-lg">Can we get pizza after? Pleaaaase? 🍕✨</p>
+<span class="block text-right font-label-caps text-[10px] text-outline mt-xs">09:30 AM</span>
+</div>
+</div>
+</div>
+<!-- Message: 10yr old (Leo) -->
+<div class="flex items-end gap-sm group">
+<div class="w-8 h-8 rounded-full overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A 10-year-old boy with messy hair and an energetic grin, wearing a striped jersey. He is outdoors in a sun-drenched backyard. The photo is high-quality with a soft bokeh effect, emphasizing warmth, fun, and a lively family atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIzUSs_c6LG57TC0oETWMyZINCnoMeRhXOWomffpifLJ0kagZbnvqv6tneKWm6tbBzvcSrp4s1GsSP25LJzwCrZmIs4TSe_4f-2HyOPhyCMTchrc78gzRmCKDue0PA_awZo30Z6KVPk0oniOifdMZn5-SgSa_K4w_Z7uLVSAe2L-CuSzY3m2LiBVi9NmnY_cyXVJ1WiSS-TiqcVoI-lS-GvzmJUhJYkjpl6lO7wXJbpFmJzd1-N4s-jH12NnFv3UTr9jmNf8wjCts"/>
+</div>
+<div class="max-w-[80%] flex flex-col">
+<span class="ml-sm font-label-caps text-label-caps text-on-surface-variant mb-xs">Leo</span>
+<div class="bg-white p-md rounded-2xl rounded-bl-none chat-bubble-shadow border-l-[6px] border-[#7a5900]">
+<p class="text-on-surface font-body-lg">I'm gonna score 3 goals today!! Watch me!! ⚽⚽⚽</p>
+<span class="block text-right font-label-caps text-[10px] text-outline mt-xs">10:05 AM</span>
+</div>
+</div>
+</div>
+<!-- Typing Indicator (Interactive Micro-animation) -->
+<div class="flex items-center gap-xs ml-[40px] opacity-0 transition-opacity duration-300" id="typing-indicator">
+<div class="w-2 h-2 bg-outline rounded-full animate-bounce"></div>
+<div class="w-2 h-2 bg-outline rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+<div class="w-2 h-2 bg-outline rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+<span class="font-label-caps text-[10px] text-outline ml-xs">Dad is typing...</span>
+</div>
+</div>
+</main>
+<!-- Fixed Message Input Bar -->
+<div class="fixed bottom-[72px] left-0 w-full px-container-margin py-base bg-background/80 backdrop-blur-md z-40 border-t border-surface-container">
+<div class="max-w-4xl mx-auto flex items-center gap-sm bg-surface-container-low p-xs rounded-full border border-outline-variant focus-within:border-primary transition-colors">
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-body-lg placeholder:text-outline h-10" placeholder="Type a message..." type="text"/>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">mood</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-sm pb-safe h-[72px] bg-surface-container-lowest dark:bg-inverse-surface shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">dashboard_customize</span>
+<span class="font-label-caps text-label-caps">Whiteboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-caps text-label-caps">Calendar</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-sm py-xs transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-caps text-label-caps">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-caps text-label-caps">Meals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps">Settings</span>
+</a>
+</nav>
+<script>
+    // Simple micro-interaction for typing indicator
+    document.addEventListener('DOMContentLoaded', () => {
+      const typingIndicator = document.getElementById('typing-indicator');
+      
+      // Simulate someone typing after 2 seconds
+      setTimeout(() => {
+        typingIndicator.classList.replace('opacity-0', 'opacity-100');
+      }, 2000);
+
+      // Hide it after 5 seconds to simulate message sent
+      setTimeout(() => {
+        typingIndicator.classList.replace('opacity-100', 'opacity-0');
+      }, 7000);
+    });
+  </script>
+</body></html>

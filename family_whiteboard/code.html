@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Family Whiteboard - Kinship</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#ffffff",
+                    "surface-container-high": "#e7e8e9",
+                    "surface-variant": "#e1e3e4",
+                    "on-error": "#ffffff",
+                    "on-tertiary-container": "#fffbff",
+                    "surface-container-low": "#f3f4f5",
+                    "on-secondary-container": "#3f1e8c",
+                    "on-secondary-fixed-variant": "#4f319c",
+                    "primary": "#00629c",
+                    "surface-dim": "#d9dadb",
+                    "inverse-primary": "#98cbff",
+                    "on-secondary-fixed": "#21005e",
+                    "primary-fixed": "#cfe5ff",
+                    "on-background": "#191c1d",
+                    "error-container": "#ffdad6",
+                    "secondary": "#674bb5",
+                    "surface-bright": "#f8f9fa",
+                    "surface-container": "#edeeef",
+                    "on-primary-fixed": "#001d33",
+                    "tertiary-fixed-dim": "#ffb783",
+                    "tertiary-fixed": "#ffdcc5",
+                    "on-tertiary-fixed-variant": "#713700",
+                    "inverse-on-surface": "#f0f1f2",
+                    "on-primary": "#ffffff",
+                    "primary-fixed-dim": "#98cbff",
+                    "on-primary-fixed-variant": "#004a77",
+                    "inverse-surface": "#2e3132",
+                    "secondary-fixed": "#e8ddff",
+                    "error": "#ba1a1a",
+                    "secondary-container": "#ab8ffe",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed": "#301400",
+                    "background": "#f8f9fa",
+                    "tertiary-container": "#b55d00",
+                    "surface": "#f8f9fa",
+                    "on-primary-container": "#00050e",
+                    "outline-variant": "#c0c7d2",
+                    "secondary-fixed-dim": "#cebdff",
+                    "primary-container": "#0e7cc1",
+                    "on-surface-variant": "#404750",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-highest": "#e1e3e4",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#904800",
+                    "outline": "#707882",
+                    "on-surface": "#191c1d",
+                    "surface-tint": "#00639c"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "xs": "4px",
+                    "container-margin": "24px",
+                    "md": "20px",
+                    "xl": "48px",
+                    "gutter": "16px",
+                    "base": "8px",
+                    "lg": "32px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "body-sm": ["Plus Jakarta Sans"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "label-caps": ["Plus Jakarta Sans"],
+                    "display-lg-mobile": ["Plus Jakarta Sans"],
+                    "title-sm": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "title-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .sticky-note {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+        }
+        .sticky-note:active {
+            transform: scale(0.98) rotate(-1deg);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-lg text-body-lg min-h-screen pb-24 selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-background dark:bg-background z-50">
+<div class="flex justify-between items-center px-container-margin py-base w-full">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" style="font-size: 28px;">family_history</span>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary dark:text-primary-fixed-dim">Kinship</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img class="w-full h-full object-cover" data-alt="A warm, professional portrait of a woman in her 40s with a kind expression, softly lit in a modern bright home office setting. The style is clean and high-fidelity, matching a premium family management application aesthetic with soft-focus backgrounds and natural daylight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6dr3QiCCcUgSZOJD_9ddGfMG6pJDnx9dmLtyn5yl4voWAAhkwigXkYRrTXksl7oy_6BmGVA2uQ_rBC24pnfb7yhRpMlPvn4DjN4zj_USZnxMOZTwwppsx3vdnkX8VPurFowxw7gGvWpqnY-dIpQlmc9T-BuB6Rs7P9BMzhxdwlXaq0J9TvZhWQ-1akUEmjzQNiBqBcCl9oD4IO9weusIAeqYrj1ea5VXdRwru-XLbdVi6I4JRhBTRNlqmkE6ehpys44XJ50r08wY"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="px-container-margin pt-sm">
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md-mobile text-on-surface mb-xs">Family Whiteboard</h2>
+<p class="text-on-surface-variant font-body-sm text-body-sm">The communal pulse of our home.</p>
+</div>
+<!-- Horizontal Scrollable Columns (Whiteboard Style) -->
+<div class="flex flex-col gap-lg">
+<!-- Category: Goals -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-base">
+<div class="w-2 h-6 bg-tertiary rounded-full"></div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Goals</h3>
+</div>
+<span class="bg-surface-container-high px-sm py-xs rounded-full font-label-caps text-label-caps text-on-surface-variant">2 ITEMS</span>
+</div>
+<div class="flex gap-md overflow-x-auto hide-scrollbar pb-base snap-x">
+<!-- Goal Card 1 -->
+<div class="sticky-note min-w-[280px] bg-surface-container-lowest p-md rounded-xl shadow-md border-l-8 border-tertiary snap-start">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="font-title-sm text-title-sm text-on-surface-variant">Summer Europe Trip</h4>
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center border border-white -mt-1 -mr-1">
+<span class="material-symbols-outlined text-[16px] text-on-secondary-fixed-variant" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-md italic">"Connecting with roots and making memories across Italy."</p>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full w-2/3"></div>
+</div>
+<div class="mt-base flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-tertiary">65% BUDGETED</span>
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-white bg-blue-400"></div>
+<div class="w-6 h-6 rounded-full border border-white bg-purple-400"></div>
+</div>
+</div>
+</div>
+<!-- Goal Card 2 -->
+<div class="sticky-note min-w-[280px] bg-surface-container-lowest p-md rounded-xl shadow-md border-l-8 border-primary snap-start">
+<div class="flex justify-between items-start mb-sm">
+<h4 class="font-title-sm text-title-sm text-on-surface-variant">Backyard Garden</h4>
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center border border-white -mt-1 -mr-1">
+<span class="material-symbols-outlined text-[16px] text-on-primary-fixed-variant" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-md">Self-sustaining vegetable patch by Spring.</p>
+<div class="w-full bg-surface-container-low h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-1/4"></div>
+</div>
+<div class="mt-base flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-primary">PLANNING PHASE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Category: On Deck -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-base">
+<div class="w-2 h-6 bg-secondary-container rounded-full"></div>
+<h3 class="font-title-sm text-title-sm text-on-surface">On Deck</h3>
+</div>
+<span class="bg-surface-container-high px-sm py-xs rounded-full font-label-caps text-label-caps text-on-surface-variant">3 ITEMS</span>
+</div>
+<div class="grid grid-cols-1 gap-md">
+<!-- Task: On Deck 1 -->
+<div class="sticky-note bg-surface-container-lowest p-md rounded-xl shadow-sm border-l-8 border-secondary-container flex justify-between items-center">
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Vet Appointment</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Don't forget the vaccine records!</p>
+<div class="mt-xs flex items-center gap-base">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">event</span>
+<span class="text-body-sm text-on-surface-variant">Thursday, 4 PM</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-xs">
+<div class="w-10 h-10 rounded-full border-2 border-secondary-fixed bg-secondary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of a friendly golden retriever's face, clean professional pet photography with a soft blue background. Vibrant colors and high clarity to symbolize a pet care task in a family dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxIsTeC5GrpLZkvwRcaSJg44zy8_kkhJZXx3kRL8560xrV3sA2AhVABU98hh_A_TWq6PxHazrJhSk4NVrMCLR48XYHfb2EcBZ1nwdosU2C9Om8d7-F5qI5OvNPAKyVBW0ZTVN4grZXNLCC_ZsDsl0VkgFWH8GVMKsTWuF3008qo4bqFGqRaVQPxJIuIxsn7gkmdTanUKqku4urRbqRKOiCOZCY-7b1wZyNDFM7oQmbS_z7nfi0FLB9TaTxvKLUMRbXcwes_f3dYhQ"/>
+</div>
+<span class="font-label-caps text-[10px] text-on-secondary-container uppercase">Husband</span>
+</div>
+</div>
+<!-- Task: On Deck 2 -->
+<div class="sticky-note bg-surface-container-lowest p-md rounded-xl shadow-sm border-l-8 border-primary-container flex justify-between items-center">
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Math Project Prep</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Need poster board &amp; markers.</p>
+</div>
+<div class="flex flex-col items-end gap-xs">
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed bg-primary-container flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a cheerful 12-year-old boy with glasses, high-key lighting, modern clean photography for a user avatar in a tech interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVIAWcN8iOHvb7R2TekWfozi1122Xtb-8nBySUPd-hbR5M0bIHOYzK9QImFLcZ2WerHfSWNL_FOYMSV9FKM7h-1NHV-m_1T_Y9X2Su5q_fxvu07gnVC5oAmQRnOX0nvg2AgNJzHOzWddyM00rSwBDB7VdzjNaomQub9hFg_jY0nSckSqXnVn_DYCQoxD-hE_XFsjlYTKkip2CnFYr4o0y9vi_Xzmc-Jx3b7f6-CPbm-l8XAJeXn55bbLe0YZVnPL_PZNhr1YH4inc"/>
+</div>
+<span class="font-label-caps text-[10px] text-on-primary-container uppercase">12yr Old</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Category: Active -->
+<section>
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-base">
+<div class="w-2 h-6 bg-primary rounded-full"></div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Active</h3>
+</div>
+<span class="bg-primary-fixed px-sm py-xs rounded-full font-label-caps text-label-caps text-on-primary-fixed">1 WORKING</span>
+</div>
+<div class="sticky-note bg-surface-container-lowest p-md rounded-xl shadow-lg border-l-8 border-primary ring-2 ring-primary-container/20">
+<div class="flex justify-between items-start mb-sm">
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-sm py-1 rounded-full font-label-caps text-[10px]">IN PROGRESS</span>
+<div class="animate-pulse w-3 h-3 bg-primary rounded-full"></div>
+</div>
+<h4 class="font-headline-md text-headline-md-mobile text-on-surface mb-xs">Grocery Run</h4>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-md">Grabbing organic milk, sourdough, and avocados for tonight's taco night.</p>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full overflow-hidden border-2 border-primary-fixed">
+<img class="w-full h-full object-cover" data-alt="High-end lifestyle photography of a young woman in her mid-20s, smiling, natural lighting, looking at her phone while walking in a modern grocery store aisle. Soft focus background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLGTjlzYlNcWDLXsyke7kP4VjGU1p2v4Kf_4QJuK-IfHk0KuMEHdpACjlPRxeC0cT9rSqNh57_RZuIB1HqEWfdqT6Q1v0B9EAbS5_6T6XyqExuXnhseiq-3XksL0fnmW-ihaExx6_Eke-ECZ4gyE0WYOYFA2f183FJzd31x6ugG9SsBfaHZSHmmgF7IvK-B0dgHk44GRLyaqnJFvF5YZI6Oa-Hu72auowzk0ttyq4jGOErXBCRAWaKZdxaPt68WNka8onVuI6vHIU"/>
+</div>
+<span class="font-body-sm text-body-sm font-bold text-on-surface">25yr Old</span>
+</div>
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+</div>
+</div>
+</section>
+<!-- Category: Complete -->
+<section class="opacity-70">
+<div class="flex items-center justify-between mb-md">
+<div class="flex items-center gap-base">
+<div class="w-2 h-6 bg-outline-variant rounded-full"></div>
+<h3 class="font-title-sm text-title-sm text-on-surface">Complete</h3>
+</div>
+<span class="bg-surface-container-high px-sm py-xs rounded-full font-label-caps text-label-caps text-on-surface-variant">RECENTLY</span>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="sticky-note bg-surface-container-low p-sm rounded-xl border-l-4 border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between">
+<span class="material-symbols-outlined text-outline text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="w-6 h-6 rounded-full bg-pink-100 border border-pink-200"></div>
+</div>
+<h4 class="text-body-sm font-bold text-on-surface-variant line-through decoration-on-surface-variant/40">Piano Practice</h4>
+<span class="text-[10px] text-outline font-label-caps">10yr Old • 2h ago</span>
+</div>
+<div class="sticky-note bg-surface-container-low p-sm rounded-xl border-l-4 border-outline-variant flex flex-col justify-between h-32">
+<div class="flex justify-between">
+<span class="material-symbols-outlined text-outline text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="w-6 h-6 rounded-full bg-blue-100 border border-blue-200"></div>
+</div>
+<h4 class="text-body-sm font-bold text-on-surface-variant line-through decoration-on-surface-variant/40">Renew Insurance</h4>
+<span class="text-[10px] text-outline font-label-caps">Wife • Today</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed bottom-[96px] right-container-margin w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-sm pb-safe h-[72px] bg-surface-container-lowest dark:bg-inverse-surface shadow-[0_-4px_12px_rgba(0,0,0,0.05)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-sm py-xs scale-105 active:scale-95 transition-transform hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard_customize</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Whiteboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs scale-105 active:scale-95 transition-transform hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Calendar</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs scale-105 active:scale-95 transition-transform hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">checklist</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Lists</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs scale-105 active:scale-95 transition-transform hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">restaurant</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Meals</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-sm py-xs scale-105 active:scale-95 transition-transform hover:opacity-80 transition-opacity" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-caps text-label-caps uppercase mt-1">Settings</span>
+</a>
+</nav>
+<script>
+        // Simple haptic feedback simulation
+        document.querySelectorAll('.sticky-note').forEach(card => {
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.96) rotate(1deg)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Toggle sticky headers shadow on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.add('transition-shadow');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>
